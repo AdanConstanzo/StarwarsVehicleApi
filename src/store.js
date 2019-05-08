@@ -28,28 +28,74 @@ export const store = {
 	},
 	async parseFilms(vehicle) {
 		const films = []
+		// Getting a reference to  localstorage
+		let ls_vehicle = localStorage.getItem("films");
+		// checks if it's null. Creates a new object else parses it.
+		if (ls_vehicle === null) {
+			ls_vehicle = {}
+		} else {
+			ls_vehicle = JSON.parse(ls_vehicle);
+		}
+
+		// varialbe to check if new info is added.
+		let addedInfo = false;
+
+		// loops though films.
 		for(let i = 0; i < vehicle.films.length; i++) {
-			const filmInfo = await this.film(vehicle.films[i]);
-			films.push(filmInfo.title);
+
+			// caching mechanism.
+			if (ls_vehicle[vehicle.films[i]]) {
+				console.log("Cached film from local storage!: ", vehicle.films[i])
+				films.push(ls_vehicle[vehicle.films[i]].title);
+			} else { /*  calling API and caching it. Also setting addedInfo to true. */
+				console.log("Setting this film to local storage!: ", vehicle.films[i])
+				const filmInfo = await this.film(vehicle.films[i]);
+				films.push(filmInfo.title);
+				ls_vehicle[vehicle.films[i]] = filmInfo;
+				addedInfo = true;
+			}
+		}
+		// if added info then set to localstorage.
+		if (addedInfo) {
+			localStorage.setItem("films", JSON.stringify(ls_vehicle));
 		}
 		console.log("Films from parseFilms: ",films);
 		return films;
 	},
 	async parseCharacters(vehicle){
+
 		const characterNames = []
+		// Getting reference to localstorage
+		let ls_character = localStorage.getItem("characters");
+		// checks if it's null. Creates a new object else parses it.
+		if (ls_character === null) {
+			ls_character = {}
+		} else {
+			ls_character = JSON.parse(ls_character);
+		}
+
+		// varialbe to check if new info is added.
+		let addedInfo = false;
+
+		// loops though pilots
 		for(let i = 0; i < vehicle.pilots.length; i++) {
-			const characterInfo = await this.character(vehicle.pilots[i]);
-			characterNames.push(characterInfo.name);
+			// caching mechanism;
+			if(ls_character[vehicle.pilots[i]]) {
+				console.log("Cached pilot from localStorage!: ", vehicle.pilots[i]);
+				characterNames.push(ls_character[vehicle.pilots[i]].name);
+			} else { /*  calling API and caching it. Also setting addedInfo to true. */
+				console.log("Setting this film to local storage!: ", vehicle.films[i])
+				const characterInfo = await this.character(vehicle.pilots[i]);
+				characterNames.push(characterInfo.name);
+				ls_character[vehicle.pilots[i]] = characterInfo;
+				addedInfo = true;
+			}
+		}
+		// if added info then set to localstorage.
+		if (addedInfo) {
+			localStorage.setItem("characters", JSON.stringify(ls_character));
 		}
 		console.log("Character names from parseCharacters", characterNames);
 		return characterNames;
 	}
 }
-
-
-/*
-axios.get(config.url)
-		.then(results => {
-			console.log(results.data)
-		})
-*/

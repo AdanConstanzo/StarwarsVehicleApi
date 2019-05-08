@@ -52,16 +52,16 @@
 								<div class="lds-dual-ring"></div>
 							</div>
 							<div v-show="movies.length > 0" >
-								<carousel>
-									<slides class="SlideInfo" v-for="film in movies" 
+								<Carousel>
+									<Slide class="SlideInfo" v-for="film in movies" 
 										:key="film"
 									>
 										<div>
 											<img class="Movie" v-bind:src="MovieImages[film]" />
 											<center><p>{{film}}</p></center>
 										</div>
-									</slides>
-								</carousel>
+									</Slide>
+								</Carousel>
 							</div>
 						</div>
 						<sui-divider />
@@ -76,16 +76,16 @@
 								<h1>No piolts for {{spaceship.name}} </h1>
 							</div>
 							<div v-show="characters.length > 0" >
-								<carousel>
-									<slides class="SlideInfo" v-for="character in characters" 
+								<Carousel>
+									<Slide class="SlideInfo" v-for="character in characters" 
 										:key="character"
 									>
 										<div>
 											<img class="Movie" v-bind:src="PeopleImages[character]" />
 											<center><p>{{character}}</p></center>
 										</div>
-									</slides>
-								</carousel>
+									</Slide>
+								</Carousel>
 							</div>
 						</div>
 					</sui-grid-column>
@@ -98,7 +98,7 @@
 
 <script>
 	
-	import { Carousel, Slides } from 'vue-carousel';
+	import { Carousel, Slide } from 'vue-carousel';
 
 	import { store } from '../store.js';
 	import MovieImages from '../seed/Films.JSON';
@@ -121,7 +121,7 @@
 			props: ['spaceship', 'image'],
 			components: {
 				Carousel,
-				Slides
+				Slide
 			},
       methods: {
         async toggle() {
@@ -161,6 +161,7 @@
 	}
 	.Info {
 		height: 50%;
+		overflow-y: hidden;
 	}
 	.spaceshipName{
 		text-decoration: underline;
