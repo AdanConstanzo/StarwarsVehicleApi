@@ -51,7 +51,7 @@
 							</div>
 							<div v-show="movies.length > 0" >
 								<carousel>
-									<slides class="MovieSlide" v-for="film in movies" 
+									<slides class="SlideInfo" v-for="film in movies" 
 										:key="film"
 									>
 										<sui-image class="Movie" v-bind:src="MovieImages[film]" center />
@@ -63,7 +63,22 @@
 						<sui-divider />
 						<div class="Info">
 							<h3>Passengers in <span class='spaceshipName'>{{spaceship.name}}</span></h3>
-							
+							<div v-show="!fetched" >
+								<h1>Fetching piolts for {{spaceship.name}} </h1>
+							</div>
+							<div v-show="characters.length === 0 && fetched " >
+								<h1>No piolts for {{spaceship.name}} </h1>
+							</div>
+							<div v-show="characters.length > 0" >
+								<carousel>
+									<slides class="SlideInfo" v-for="character in characters" 
+										:key="character"
+									>
+										<sui-image class="Movie" v-bind:src="PeopleImages[character]" center />
+										<p>{{character}}</p>
+									</slides>
+								</carousel>
+							</div>
 						</div>
 					</sui-grid-column>
 				</sui-grid>
@@ -78,8 +93,8 @@
 	import { Carousel, Slides } from 'vue-carousel';
 
 	import { store } from '../store.js';
-	import MovieCard from './MovieCard.vue';
 	import MovieImages from '../seed/Films.JSON';
+	import PeopleImages from '../seed/People.JSON';
 
 
   export default {
@@ -89,13 +104,14 @@
 						open: false,
 						cardHover: false,
 						movies: [],
+						characters: [],
 						MovieImages,
+						PeopleImages,
 						fetched: false
           }
 			},
 			props: ['spaceship', 'image'],
 			components: {
-				MovieCard,
 				Carousel,
 				Slides
 			},
@@ -104,10 +120,10 @@
 					this.open = !this.open;
 					if (this.movies.length === 0)
 						this.movies = await store.parseFilms(this.spaceship)
-					if (!this.fetched)
+					if (!this.fetched){
+						this.characters = await store.parseCharacters(this.spaceship)
 						this.fetched = true;
-						console.log("I am suppose to fetch pilots")
-
+					}
 				},
       }
   }
@@ -145,7 +161,7 @@
 		width: 100px;
 		height: 150px;;
 	}
-	.MovieSlide{
+	.SlideInfo{
 		padding: 5px;
 	}
 </style>

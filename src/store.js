@@ -24,6 +24,9 @@ export const store = {
 	film(filmUrl){
 		return axios(filmUrl).then(res => res.data)
 	},
+	character(characterUrl){
+		return axios(characterUrl).then(res => res.data)
+	},
 	async parseFilms(vehicle) {
 		const films = []
 		for(let i = 0; i < vehicle.films.length; i++) {
@@ -32,6 +35,15 @@ export const store = {
 		}
 		console.log("Films from parseFilms: ",films);
 		return films;
+	},
+	async parseCharacters(vehicle){
+		const characterNames = []
+		for(let i = 0; i < vehicle.pilots.length; i++) {
+			const characterInfo = await this.character(vehicle.pilots[i]);
+			characterNames.push(characterInfo.name);
+		}
+		console.log("Character names from parseCharacters", characterNames);
+		return characterNames;
 	}
 }
 
