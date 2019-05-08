@@ -1,6 +1,7 @@
 <template>
     <div class="StarWars" is="sui-container">
-			<h1>Star Wars Vehicle API</h1>
+			<h1 class="Title" >Star Wars Vehicle API</h1>
+			<h1 class="Meta" >Created by Adan Constanzo</h1>
 			<br/>
 			<div v-show="sharedState.starships.length === 0"  > 
 				<div id="loaderDiv"><sui-loader class="loader" active centered inline size="massive">Loading</sui-loader></div>
@@ -62,7 +63,12 @@
 		height: 1px;
 		background-color: white;
 	}
-
+	.Title {
+		font-size: 50px;
+	}
+	.Meta {
+		font-size: 20px;
+	}
 	/* ==== Animations! ==== */
 	@keyframes scale { 
 		100% { transform: scaleX(2) scaleY(2);} 

@@ -56,8 +56,10 @@
 									<slides class="SlideInfo" v-for="film in movies" 
 										:key="film"
 									>
-										<sui-image class="Movie" v-bind:src="MovieImages[film]" center />
-										<p>{{film}}</p>
+										<div>
+											<img class="Movie" v-bind:src="MovieImages[film]" />
+											<center><p>{{film}}</p></center>
+										</div>
 									</slides>
 								</carousel>
 							</div>
@@ -78,8 +80,10 @@
 									<slides class="SlideInfo" v-for="character in characters" 
 										:key="character"
 									>
-										<sui-image class="Movie" v-bind:src="PeopleImages[character]" center />
-										<p>{{character}}</p>
+										<div>
+											<img class="Movie" v-bind:src="PeopleImages[character]" />
+											<center><p>{{character}}</p></center>
+										</div>
 									</slides>
 								</carousel>
 							</div>
@@ -161,9 +165,12 @@
 	.spaceshipName{
 		text-decoration: underline;
 	}
-	.Movie{
+	img{
 		width: 100px;
-		height: 150px;;
+		height: 150px;
+		margin: 0 auto;
+		text-align: center;
+		display: block !important;
 	}
 	.SlideInfo{
 		padding: 5px;
