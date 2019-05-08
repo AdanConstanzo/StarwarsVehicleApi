@@ -16,7 +16,6 @@ export const store = {
 				break;
 		}
 		this.state.starships = StarShips
-		console.log(this.state.starships)
 	},
 	fetchStarShipByPage (page) {
 		return axios(`${config.url}?page=${page}`).then(res => res.data)
