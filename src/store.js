@@ -20,6 +20,18 @@ export const store = {
 	},
 	fetchStarShipByPage (page) {
 		return axios(`${config.url}?page=${page}`).then(res => res.data)
+	},
+	film(filmUrl){
+		return axios(filmUrl).then(res => res.data)
+	},
+	async parseFilms(vehicle) {
+		const films = []
+		for(let i = 0; i < vehicle.films.length; i++) {
+			const filmInfo = await this.film(vehicle.films[i]);
+			films.push(filmInfo.title);
+		}
+		console.log("Films from parseFilms: ",films);
+		return films;
 	}
 }
 

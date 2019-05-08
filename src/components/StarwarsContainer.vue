@@ -16,7 +16,7 @@
 	
 	import { store } from '../store.js';
 	import StarwarsShip from './StarwarsShip.vue';
-	import ShipImages from '../ShipImages.js';
+	import ShipImages from '../seed/Starships.JSON';
 	export default {
 		name: 'StarwarsContainer',        
 		data () {

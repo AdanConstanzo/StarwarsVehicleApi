@@ -45,11 +45,25 @@
 					</sui-grid-column>
 					<sui-grid-column>
 						<div class="Info">
-							<h3>Movies {{spaceship.name}} has appeared in.</h3>
+							<h3>Movies <span class='spaceshipName'>{{spaceship.name}}</span> has appeared in.</h3>
+							<div v-show="movies.length === 0" >
+								<h1>Fetching Movies {{spaceship.name}} has been in.</h1>
+							</div>
+							<div v-show="movies.length > 0" >
+								<carousel>
+									<slides class="MovieSlide" v-for="film in movies" 
+										:key="film"
+									>
+										<sui-image class="Movie" v-bind:src="MovieImages[film]" center />
+										<p>{{film}}</p>
+									</slides>
+								</carousel>
+							</div>
 						</div>
 						<sui-divider />
 						<div class="Info">
-							<h3>Passengers in {{spaceship.name}}</h3>
+							<h3>Passengers in <span class='spaceshipName'>{{spaceship.name}}</span></h3>
+							
 						</div>
 					</sui-grid-column>
 				</sui-grid>
@@ -60,20 +74,40 @@
 
 
 <script>
-	import { store } from '../store.js';
 	
+	import { Carousel, Slides } from 'vue-carousel';
+
+	import { store } from '../store.js';
+	import MovieCard from './MovieCard.vue';
+	import MovieImages from '../seed/Films.JSON';
+
+
   export default {
       name: 'Spaceship',
       data () {
           return {
 						open: false,
-						cardHover: false
+						cardHover: false,
+						movies: [],
+						MovieImages,
+						fetched: false
           }
 			},
 			props: ['spaceship', 'image'],
+			components: {
+				MovieCard,
+				Carousel,
+				Slides
+			},
       methods: {
-        toggle() {
+        async toggle() {
 					this.open = !this.open;
+					if (this.movies.length === 0)
+						this.movies = await store.parseFilms(this.spaceship)
+					if (!this.fetched)
+						this.fetched = true;
+						console.log("I am suppose to fetch pilots")
+
 				},
       }
   }
@@ -103,5 +137,15 @@
 	}
 	.Info {
 		height: 50%;
+	}
+	.spaceshipName{
+		text-decoration: underline;
+	}
+	.Movie{
+		width: 100px;
+		height: 150px;;
+	}
+	.MovieSlide{
+		padding: 5px;
 	}
 </style>
