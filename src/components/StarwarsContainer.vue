@@ -3,8 +3,8 @@
 			<h1>Star Wars Vehicle API</h1>
 			<br/>
 			<div v-show="sharedState.starships.length === 0"  > 
-				<h1>Loading</h1>
-				<sui-image v-bind:src="MillenniumFalconImage" centered />
+				<div id="loaderDiv"><sui-loader class="loader" active centered inline size="massive">Loading</sui-loader></div>
+				<div id="MillenniumFalconImage" ><sui-image size='medium' v-bind:src="MillenniumFalconImage"/></div>
 			</div>
 			<div v-show="sharedState.starships.length > 0" >
 				<sui-card-group :items-per-row="3">
@@ -36,48 +36,24 @@
 		created() {
 			// fetches all starships.
 			// store.fetchStarShip()
-			// this.generateStars();
-
 		},
 		components: {
 			StarwarsShip,
 			Star
-		},
-		methods:{
-			getRandomPosition(){
-				const y = window.innerWidth;
-				const x = window.innerHeight;
-				const randomX = Math.floor(Math.random()*x);
-				const randomY = Math.floor(Math.random()*y);
-				return [randomX, randomY];
-			},
-			generateStars(){
-				for (let i = 0; i < 100; i++) {
-					console.log(i);
-					
-					let star = document.createElement("div");  
-					star.className = "star";
-					const xy = this.getRandomPosition();
-					console.log(xy)
-					star.style.top = xy[0] + 'px';
-					star.style.left = xy[1] + 'px';
-					document.body.append(star);
-				}
-			}
 		}
 	}
 </script>
-
-
 
 <style scoped>
 	.StarWars{
 		margin-top: 20px;
 	}
-	h1{
-		font-family:  'Star Jedi', arial;
+	h1,.loader{
 		text-align: center;
 		color: #FAE31E;
+	}
+	#loaderDiv{
+		margin-top: 10%;
 	}
 
 	.star {
@@ -86,5 +62,36 @@
 		height: 1px;
 		background-color: white;
 	}
+
+	/* ==== Animations! ==== */
+	@keyframes scale { 
+		100% { transform: scaleX(2) scaleY(2);} 
+	}
 	
+	@keyframes move {
+		0%  { transform: translate(0, 0);}
+		20% { transform: translate(0, 0);}
+		80% {transform: translate(50px, 100px);}
+		85% {transform: translate(55px, 105px);}
+		95% {transform: translate(50px, 100px);}
+		80% {transform: translate(55px, 105px);}
+		100% {transform: translate(50px, 100px);}
+	}
+	@keyframes rotate {
+		100% {transform: rotate(360deg);}
+	}
+	/* Image animations! */
+	div#MillenniumFalconImage{
+    animation: move 5s linear 0.5s infinite alternate;
+	}
+	div#MillenniumFalconImage img{
+		margin-top: 10%;
+		margin-left: 10%;
+    animation: scale 5s linear 0.5s infinite alternate;
+	}
+	div#MillenniumFalconImage img:hover {
+    animation: rotate 0.5s linear 0s 1 alternate;
+	}
+
+
 </style>
