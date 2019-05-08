@@ -35,7 +35,7 @@
 		},
 		created() {
 			// fetches all starships.
-			// store.fetchStarShip()
+			store.fetchStarShip()
 		},
 		components: {
 			StarwarsShip,

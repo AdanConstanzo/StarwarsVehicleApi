@@ -48,6 +48,8 @@
 							<h3>Movies <span class='spaceshipName'>{{spaceship.name}}</span> has appeared in.</h3>
 							<div v-show="movies.length === 0" >
 								<h1>Fetching Movies {{spaceship.name}} has been in.</h1>
+								<!-- Loader Animation -->
+								<div class="lds-dual-ring"></div>
 							</div>
 							<div v-show="movies.length > 0" >
 								<carousel>
@@ -65,6 +67,8 @@
 							<h3>Passengers in <span class='spaceshipName'>{{spaceship.name}}</span></h3>
 							<div v-show="!fetched" >
 								<h1>Fetching piolts for {{spaceship.name}} </h1>
+								<!-- Loader Animation -->
+								<div class="lds-dual-ring"></div>
 							</div>
 							<div v-show="characters.length === 0 && fetched " >
 								<h1>No piolts for {{spaceship.name}} </h1>
@@ -149,7 +153,7 @@
 	.CenterImage {
 		display: block;
     margin: 0 auto;
-		text-align: center
+		text-align: center;
 	}
 	.Info {
 		height: 50%;
@@ -163,5 +167,32 @@
 	}
 	.SlideInfo{
 		padding: 5px;
+	}
+	/* CSS code for loading spinner in modal */
+	lds-dual-ring {
+		display: inline-block;
+		width: 64px;
+		height: 64px;
+	}
+	.lds-dual-ring:after {
+		content: " ";
+		display: block;
+		width: 46px;
+		height: 46px;
+		border-radius: 50%;
+		border: 5px solid #000;
+		border-color: #000 transparent #000 transparent;
+		animation: lds-dual-ring 1.2s linear infinite;
+		margin: 0 auto;
+		margin-top: 3em;
+		text-align: center;
+	}
+	@keyframes lds-dual-ring {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
 	}
 </style>
