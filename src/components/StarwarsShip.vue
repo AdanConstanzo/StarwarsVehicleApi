@@ -57,7 +57,7 @@
 										:key="film"
 									>
 										<div>
-											<img class="Movie" v-bind:src="MovieImages[film]" />
+											<img class="Movie" v-bind:src="sharedState.MovieImages[film]" />
 											<center><p>{{film}}</p></center>
 										</div>
 									</Slide>
@@ -84,7 +84,7 @@
 										:key="character"
 									>
 										<div>
-											<img class="Movie" v-bind:src="PeopleImages[character]" />
+											<img class="Movie" v-bind:src="sharedState.PeopleImages[character]" />
 											<center><p>{{character}}</p></center>
 										</div>
 									</Slide>
@@ -107,9 +107,6 @@
 	import { Carousel, Slide } from 'vue-carousel';
 
 	import { store } from '../store.js';
-	import MovieImages from '../seed/Films.JSON';
-	import PeopleImages from '../seed/People.JSON';
-
 
   export default {
       name: 'Spaceship',
@@ -120,9 +117,7 @@
 						cardHover: false,
 						movies: [],
 						characters: [],
-						MovieImages,
-						PeopleImages,
-						fetched: false
+						fetched: false,
           }
 			},
 			props: ['spaceship', 'image'],

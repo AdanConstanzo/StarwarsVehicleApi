@@ -1,10 +1,18 @@
 import config from './config.json';
 import axios from 'axios';
+import ShipImages from './seed/Starships.JSON';
+import MovieImages from './seed/Films.JSON';
+import PeopleImages from './seed/People.JSON';
 
 export const store = {
   state: {
 		starships: [],
-		error: {}
+		error: {},
+		starshipSearched: {},
+		searchShip: "",
+		ShipImages,
+		MovieImages,
+		PeopleImages,
 	},
   async fetchStarShip () {
 		let StarShips = []
@@ -17,13 +25,23 @@ export const store = {
 				if (f.next === null)
 					break;
 			} catch (error) {
-				this.state.error['message'] = "An error occured. Sorry for the inconvenience. "
+				this.state.error['message'] = "An error occured through Star Wars API. Sorry for the inconvenience. "
 				break;
 			}
 			
 		}
 		this.state.starships = StarShips
 	},
+	searchShipByName () {
+		const { starshipSearched, searchShip, starships } = this.state;
+
+		if (starshipSearched[searchShip] === undefined) {
+			const SearchShipArray = starships.filter(ship => ship.name.toLowerCase().includes(searchShip.toLowerCase()))
+			starshipSearched[searchShip] = SearchShipArray;
+			console.log(starshipSearched)
+		}
+	},
+
 	fetchStarShipByPage (page) {
 		return axios(`${config.url}?page=${page}`).then(res => res.data)
 	},

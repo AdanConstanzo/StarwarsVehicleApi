@@ -16,13 +16,20 @@
 				<div id="MillenniumFalconImage" ><sui-image size='medium' v-bind:src="MillenniumFalconImage"/></div>
 			</div>
 			<div v-show="!animationDone" id="MillenniumFalconImageAnimation" ><sui-image size='medium' v-bind:src="MillenniumFalconImage"/></div>
+			<!-- After collecting starship data -->
 			<div id="ShipContent" v-show="sharedState.starships.length > 0 && animationDone" >
-				<sui-card-group :items-per-row="5" stackable>
-					<StarwarsShip v-for="ship in sharedState.starships"
-								:key="ship.url"
-								:spaceship="ship"
-								:image="ShipImages[ship.name]"/>
-				</sui-card-group>
+				<!-- Search Componenets. -->
+				<SearchStarship />
+				
+				<!-- Standard card-based components for ships. -->
+				<div v-show="sharedState.searchShip.length === 0" >
+					<sui-card-group :items-per-row="5" stackable>
+						<StarwarsShip v-for="ship in sharedState.starships"
+									:key="ship.url"
+									:spaceship="ship"
+									:image="sharedState.ShipImages[ship.name]"/>
+					</sui-card-group>
+				</div>
 			</div>
 		</div>
 </template>
@@ -31,15 +38,14 @@
 	
 	import { store } from '../store.js';
 	import StarwarsShip from './StarwarsShip.vue';
+	import SearchStarship from './SearchStarship.vue';
 	import Star from './Star.vue';
-	import ShipImages from '../seed/Starships.JSON';
 	import MillenniumFalconImage from "../assets/Millennium Falcon.png"
 	export default {
 		name: 'StarwarsContainer',        
 		data () {
 			return {
 				sharedState: store.state,
-				ShipImages,
 				MillenniumFalconImage,
 				animationDone: false,
 				classAfterAnimation: "IntroHeader"
@@ -52,7 +58,8 @@
 		},
 		components: {
 			StarwarsShip,
-			Star
+			SearchStarship,
+			Star,
 		},
 		methods: {
 			QueAnimationDone(){
