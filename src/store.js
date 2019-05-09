@@ -17,6 +17,7 @@ export const store = {
   async fetchStarShip () {
 		let StarShips = []
 		let count = 1;
+		let errorOccured = false;
 		while (true) {
 			try{
 				const f = await this.fetchStarShipByPage(count);
@@ -25,10 +26,20 @@ export const store = {
 				if (f.next === null)
 					break;
 			} catch (error) {
-				this.state.error['message'] = "An error occured through Star Wars API. Sorry for the inconvenience. "
+				errorOccured = true;
+				if (localStorage.getItem("ships")){
+					StarShips = JSON.parse(localStorage.getItem("ships"));
+				this.state.error['message'] = "An error occured through Star Wars API. Using cached data. Sorry for the inconvenience. "
+				} else {
+					this.state.error['message'] = "An error occured through Star Wars API. Sorry for the inconvenience. "
+				}
 				break;
 			}
 			
+		}
+
+		if (localStorage.getItem("ships") === null && !errorOccured ){
+			localStorage.setItem("ships", JSON.stringify(StarShips))
 		}
 		this.state.starships = StarShips
 	},

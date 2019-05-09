@@ -8,7 +8,7 @@
 			</div>
 			<br/>
 			<div v-show="sharedState.error.hasOwnProperty('message')" >
-				<h1 class="Title">{{sharedState.error.message}}</h1>
+				<h1 class="Meta">{{sharedState.error.message}}</h1>
 			</div>
 			<!-- Loading scene. -->
 			<div v-show="sharedState.starships.length === 0 && animationDone "  > 

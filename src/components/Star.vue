@@ -36,6 +36,6 @@
 		/* animation: scale 1s linear 0s infinite alternate; */
 	}
 	.star {
-		animation: scale 3s linear 0s infinite alternate;
+		animation: scale 3s ease 0s infinite alternate;
 	}
 </style>
