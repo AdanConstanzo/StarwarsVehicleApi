@@ -71,12 +71,12 @@
 						<div class="Info">
 							<h3>Pilots for <span class='spaceshipName'>{{spaceship.name}}</span></h3>
 							<div v-if="!fetched" >
-								<h1>Fetching piolts for {{spaceship.name}} </h1>
+								<h1>Fetching pilots for {{spaceship.name}} </h1>
 								<!-- Loader Animation -->
 								<div class="lds-dual-ring"></div>
 							</div>
 							<div v-else-if="characters.length === 0 && fetched && !sharedState.error.hasOwnProperty('message-pilots')" >
-								<h1>No piolts listed for {{spaceship.name}} </h1>
+								<h1>No pilots listed for {{spaceship.name}} </h1>
 							</div>
 							<div v-else-if="characters.length > 0" >
 								<Carousel>
