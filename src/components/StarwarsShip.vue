@@ -46,12 +46,12 @@
 					<sui-grid-column>
 						<div class="Info">
 							<h3>Movies <span class='spaceshipName'>{{spaceship.name}}</span> has appeared in.</h3>
-							<div v-show="movies.length === 0" >
+							<div v-if="movies.length === 0 && !sharedState.error.hasOwnProperty('message-films')" >
 								<h1>Fetching Movies {{spaceship.name}} has been in.</h1>
 								<!-- Loader Animation -->
 								<div class="lds-dual-ring"></div>
 							</div>
-							<div v-show="movies.length > 0" >
+							<div v-else-if="movies.length > 0" >
 								<Carousel>
 									<Slide class="SlideInfo" v-for="film in movies" 
 										:key="film"
@@ -63,19 +63,22 @@
 									</Slide>
 								</Carousel>
 							</div>
+							<div v-else-if="sharedState.error.hasOwnProperty('message-films')" >
+								<sui-message header="An error has occured!" :content="sharedState.error['message-films']" />
+							</div>
 						</div>
 						<sui-divider />
 						<div class="Info">
 							<h3>Passengers in <span class='spaceshipName'>{{spaceship.name}}</span></h3>
-							<div v-show="!fetched" >
+							<div v-if="!fetched" >
 								<h1>Fetching piolts for {{spaceship.name}} </h1>
 								<!-- Loader Animation -->
 								<div class="lds-dual-ring"></div>
 							</div>
-							<div v-show="characters.length === 0 && fetched " >
+							<div v-else-if="characters.length === 0 && fetched && !sharedState.error.hasOwnProperty('message-pilots')" >
 								<h1>No piolts for {{spaceship.name}} </h1>
 							</div>
-							<div v-show="characters.length > 0" >
+							<div v-else-if="characters.length > 0" >
 								<Carousel>
 									<Slide class="SlideInfo" v-for="character in characters" 
 										:key="character"
@@ -86,6 +89,9 @@
 										</div>
 									</Slide>
 								</Carousel>
+							</div>
+							<div v-else-if="sharedState.error.hasOwnProperty('message-pilots')" >
+								<sui-message header="An error has occured!" :content="sharedState.error['message-pilots']" />
 							</div>
 						</div>
 					</sui-grid-column>
@@ -109,6 +115,7 @@
       name: 'Spaceship',
       data () {
           return {
+						sharedState: store.state,
 						open: false,
 						cardHover: false,
 						movies: [],
@@ -146,10 +153,10 @@
 		font-weight: bold;
 	}
 	#tableData {
-		height: 200px;
+		height: auto;
 		margin-top: 10px;
 		padding: 2px;
-		overflow-y: scroll;
+		/* overflow-y: scroll; */
 	}
 	h1, h3{
 		text-align: center;

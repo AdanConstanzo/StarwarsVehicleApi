@@ -3,17 +3,24 @@ import axios from 'axios';
 
 export const store = {
   state: {
-		starships: []
+		starships: [],
+		error: {}
 	},
   async fetchStarShip () {
 		let StarShips = []
 		let count = 1;
 		while (true) {
-			const f = await this.fetchStarShipByPage(count);
-			count ++;
-			StarShips = StarShips.concat(f.results);
-			if (f.next === null)
+			try{
+				const f = await this.fetchStarShipByPage(count);
+				count ++;
+				StarShips = StarShips.concat(f.results);
+				if (f.next === null)
+					break;
+			} catch (error) {
+				this.state.error['message'] = "An error occured. Sorry for the inconvenience. "
 				break;
+			}
+			
 		}
 		this.state.starships = StarShips
 	},
@@ -49,10 +56,15 @@ export const store = {
 				films.push(ls_vehicle[vehicle.films[i]].title);
 			} else { /*  calling API and caching it. Also setting addedInfo to true. */
 				console.log("Setting this film to local storage!: ", vehicle.films[i])
-				const filmInfo = await this.film(vehicle.films[i]);
-				films.push(filmInfo.title);
-				ls_vehicle[vehicle.films[i]] = filmInfo;
-				addedInfo = true;
+				try {
+					const filmInfo = await this.film(vehicle.films[i]);
+					films.push(filmInfo.title);
+					ls_vehicle[vehicle.films[i]] = filmInfo;
+					addedInfo = true;
+				} catch(error) {
+					this.state.error['message-films'] = "Occured while fetching films. Sorry for the inconvenience. "
+					break;
+				}
 			}
 		}
 		// if added info then set to localstorage.
@@ -85,10 +97,15 @@ export const store = {
 				characterNames.push(ls_character[vehicle.pilots[i]].name);
 			} else { /*  calling API and caching it. Also setting addedInfo to true. */
 				console.log("Setting this film to local storage!: ", vehicle.films[i])
-				const characterInfo = await this.character(vehicle.pilots[i]);
-				characterNames.push(characterInfo.name);
-				ls_character[vehicle.pilots[i]] = characterInfo;
-				addedInfo = true;
+				try {
+					const characterInfo = await this.character(vehicle.pilots[i]);
+					characterNames.push(characterInfo.name);
+					ls_character[vehicle.pilots[i]] = characterInfo;
+					addedInfo = true;
+				} catch (error) {
+					this.state.error['message-pilots'] = "Occured while fetching pilots. Sorry for the inconvenience. "
+					break;
+				}
 			}
 		}
 		// if added info then set to localstorage.

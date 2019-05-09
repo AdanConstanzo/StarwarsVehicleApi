@@ -3,8 +3,11 @@
 			<h1 class="Title" >Star Wars Vehicle API</h1>
 			<h1 class="Meta" >Created by Adan Constanzo</h1>
 			<br/>
+			<div v-show="sharedState.error.hasOwnProperty('message')" >
+				<h1 class="Title">{{sharedState.error.message}}</h1>
+			</div>
 			<div v-show="sharedState.starships.length === 0"  > 
-				<div id="loaderDiv"><sui-loader class="loader" active centered inline size="massive">Loading</sui-loader></div>
+				<div v-show="!sharedState.error.hasOwnProperty('message')" id="loaderDiv"><sui-loader class="loader" active centered inline size="massive">Loading</sui-loader></div>
 				<div id="MillenniumFalconImage" ><sui-image size='medium' v-bind:src="MillenniumFalconImage"/></div>
 			</div>
 			<div v-show="sharedState.starships.length > 0" >
@@ -56,13 +59,7 @@
 	#loaderDiv{
 		margin-top: 10%;
 	}
-
-	.star {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		background-color: white;
-	}
+	
 	.Title {
 		font-size: 50px;
 	}
