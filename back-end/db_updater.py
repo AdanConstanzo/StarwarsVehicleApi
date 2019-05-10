@@ -16,7 +16,7 @@ class SWAP_DB():
 		if typeOfItem == "starships":
 			item_db = self.client.starwars.ships
 		elif typeOfItem == "people":
-			item_db = self.client.starwars.people
+			item_db = self.client.starwars.peoples
 		elif typeOfItem == "films":
 			item_db = self.client.starwars.films
 		# inserting to db

@@ -9,6 +9,7 @@
     "nodeServer": "nodemon --exec babel-node -- back-end/index.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "build-server": "babel  back-end/ -d dist_server/",
     "dev-all": "npm-run-all -p -r nodeServer dev"
   },
   "dependencies": {
