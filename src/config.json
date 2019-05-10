@@ -1,4 +1,11 @@
 {
 	"url": "https://swapi.co/api/starships/",
-	"filmUrl": "https://swapi.co/api/films/"
+	"filmUrl": "https://swapi.co/api/films/",
+	"locally": {
+		"ship": "/api/starship/all/",
+		"people": "/api/people/all/",
+		"people_url": "/api/people/?url=",
+		"film": "/api/film/all/",
+		"film_url": "/api/film/?url="
+	}
 }

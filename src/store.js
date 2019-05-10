@@ -4,6 +4,7 @@ import ShipImages from './seed/Starships.JSON';
 import MovieImages from './seed/Films.JSON';
 import PeopleImages from './seed/People.JSON';
 
+
 export const store = {
   state: {
 		starships: [],
@@ -13,14 +14,29 @@ export const store = {
 		ShipImages,
 		MovieImages,
 		PeopleImages,
+		API_LOCAL: true
 	},
-  async fetchStarShip () {
+  async fetchStarShip (locally) {
+		if (locally) {
+			try {
+				const ships = await this.fetchStarShipByPage(0, true);
+				
+				this.state.starships = ships;
+				
+				if (localStorage.getItem("ships") === null){
+					localStorage.setItem("ships", JSON.stringify(ships))
+				}
+			} catch (error){
+				console.log(error)
+			}
+			return ;
+		}
 		let StarShips = []
 		let count = 1;
 		let errorOccured = false;
 		while (true) {
 			try{
-				const f = await this.fetchStarShipByPage(count);
+				const f = await this.fetchStarShipByPage(count, false);
 				count ++;
 				StarShips = StarShips.concat(f.results);
 				if (f.next === null)
@@ -53,16 +69,25 @@ export const store = {
 		}
 	},
 
-	fetchStarShipByPage (page) {
+	fetchStarShipByPage (page, locally) {
+		if (locally) {
+			return axios(`${config.locally.ship}`).then(res => res.data.ships)
+		}
 		return axios(`${config.url}?page=${page}`).then(res => res.data)
 	},
-	film(filmUrl){
+	film(filmUrl, locally){
+		if (locally) {
+			return axios(`${config.locally.film_url}${filmUrl}`).then(res => res.data.film)
+		}
 		return axios(filmUrl).then(res => res.data)
 	},
-	character(characterUrl){
+	character(characterUrl, locally){
+		if (locally) {
+			return axios(`${config.locally.people_url}${characterUrl}`).then(res => res.data.person)
+		}
 		return axios(characterUrl).then(res => res.data)
 	},
-	async parseFilms(vehicle) {
+	async parseFilms(vehicle, locally) {
 		const films = []
 		// Getting a reference to  localstorage
 		let ls_vehicle = localStorage.getItem("films");
@@ -86,7 +111,7 @@ export const store = {
 			} else { /*  calling API and caching it. Also setting addedInfo to true. */
 				console.log("Setting this film to local storage!: ", vehicle.films[i])
 				try {
-					const filmInfo = await this.film(vehicle.films[i]);
+					const filmInfo = await this.film(vehicle.films[i], locally);
 					films.push(filmInfo.title);
 					ls_vehicle[vehicle.films[i]] = filmInfo;
 					addedInfo = true;
@@ -103,7 +128,7 @@ export const store = {
 		console.log("Films from parseFilms: ",films);
 		return films;
 	},
-	async parseCharacters(vehicle){
+	async parseCharacters(vehicle, locally){
 
 		const characterNames = []
 		// Getting reference to localstorage
@@ -127,7 +152,7 @@ export const store = {
 			} else { /*  calling API and caching it. Also setting addedInfo to true. */
 				console.log("Setting this film to local storage!: ", vehicle.films[i])
 				try {
-					const characterInfo = await this.character(vehicle.pilots[i]);
+					const characterInfo = await this.character(vehicle.pilots[i], locally);
 					characterNames.push(characterInfo.name);
 					ls_character[vehicle.pilots[i]] = characterInfo;
 					addedInfo = true;

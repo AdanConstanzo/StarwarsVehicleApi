@@ -129,9 +129,11 @@
         async toggle() {
 					this.open = !this.open;
 					if (this.movies.length === 0)
-						this.movies = await store.parseFilms(this.spaceship)
+						// parseFilms second argument decided to be local api or remote (star wars api)
+						this.movies = await store.parseFilms(this.spaceship, this.sharedState.API_LOCAL)
 					if (!this.fetched){
-						this.characters = await store.parseCharacters(this.spaceship)
+						// parseCharacters second argument decided to be local api or remote (star wars api)
+						this.characters = await store.parseCharacters(this.spaceship, this.sharedState.API_LOCAL)
 						this.fetched = true;
 					}
 				},

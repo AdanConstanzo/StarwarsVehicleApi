@@ -15,4 +15,14 @@ router.get("/all", (req, res) => {
 		});
 });
 
+router.get('/', (req,res) => {
+	Person
+		.findOne({ "url": req.query.url })
+		.exec((err, person) => {
+			if (err) return err;
+			if (person) return res.send({ person });
+			return res.status(404).json({ error: { global: "Empty Set" } });
+		});
+});
+
 export default router;

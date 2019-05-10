@@ -53,7 +53,8 @@
 		},
 		created() {
 			// fetches all starships.
-			store.fetchStarShip()
+			// true for local, false for remote api.
+			store.fetchStarShip(this.sharedState.API_LOCAL)
 			this.QueAnimationDone()
 		},
 		components: {

@@ -8,6 +8,7 @@ Vue.component('slide', Slide)
 Vue.use(SuiVue);
 
 
+
 new Vue({
   el: '#app',
   render: h => h(App)

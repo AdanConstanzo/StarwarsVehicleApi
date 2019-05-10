@@ -15,4 +15,14 @@ router.get("/all", (req, res) => {
 		});
 });
 
+router.get('/', (req,res) => {
+	Film
+		.findOne({ "url": req.query.url })
+		.exec((err, film) => {
+			if (err) return err;
+			if (film) return res.send({ film });
+			return res.status(404).json({ error: { global: "Empty Set" } });
+		});
+});
+
 export default router;
