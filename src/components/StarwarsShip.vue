@@ -18,9 +18,9 @@
 			<sui-card-description>{{ spaceship.manufacturer }}</sui-card-description>
 		</sui-card-content>
 		<!-- This is our modal! -->
-		<sui-modal v-model="open" size="large" > 
-			<sui-modal-content>
-				<sui-grid :columns="2" celled >
+		<sui-modal v-model="open" size="large"> 
+			<sui-modal-content scrolling>
+				<sui-grid :columns="2" celled stackable >
 					<sui-grid-column>
 						<h1>{{spaceship.name}}</h1>
 						<div class="CenterImage" >

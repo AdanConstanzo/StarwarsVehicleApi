@@ -1,6 +1,9 @@
 <template>
     <div class="SearchInputDiv" >
-			<sui-input class="SearchInput" @keyup.enter="handleInput()" v-model="ShipSearch" placeholder="Search a spaceship!" icon="search"/>
+			<sui-input class="SearchInput" @keyup.enter="handleInput" v-model="ShipSearch" placeholder="Search a spaceship!"/>
+			<div v-if="sharedState.searchShip.length == 0" >
+					<sui-button @click="handleInput" class="ClearButton" color="black" inverted content="Search" icon="search" />
+			</div>
 			<div v-if="sharedState.searchShip.length > 0" >
 					<sui-button @click="clearSearch" class="ClearButton" color="black" inverted content="Clear Search" icon="times" />
 					<h1 v-if="!sharedState.starshipSearched.hasOwnProperty(sharedState.searchShip)" >Searching for a spaceship with the name {{ShipSearch}}</h1>
@@ -29,7 +32,9 @@
 		}, created() {
 		}, methods: {
 			handleInput(){
-				this.sharedState.searchShip = this.ShipSearch
+				if (this.ShipSearch.trim().length == 0)
+					return;
+				this.sharedState.searchShip = this.ShipSearch.trim()
 				store.searchShipByName();
 			},
 			clearSearch(){
@@ -60,6 +65,7 @@
 	}
 	.ClearButton{
 		margin-top: 10px;
+		margin-bottom: 10px;
 	}
 	
 </style>
