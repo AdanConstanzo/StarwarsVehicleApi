@@ -1,6 +1,6 @@
-import express from 'express';
+const express = require('express');
 
-import Starship from '../models/starship';
+const Starship = require('../models/starship');
 
 const router = express.Router();
 
@@ -15,4 +15,4 @@ router.get("/all", (req, res) => {
 		});
 });
 
-export default router;
+module.exports = router;

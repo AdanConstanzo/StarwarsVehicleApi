@@ -1,6 +1,6 @@
-import express from 'express';
+const express = require('express');
 
-import Film from '../models/film';
+const Film = require('../models/film');
 
 const router = express.Router();
 
@@ -25,4 +25,4 @@ router.get('/', (req,res) => {
 		});
 });
 
-export default router;
+module.exports = router;

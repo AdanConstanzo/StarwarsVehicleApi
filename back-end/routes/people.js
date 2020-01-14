@@ -1,6 +1,6 @@
-import express from 'express';
+const express = require('express');
 
-import Person from '../models/person';
+const Person = require('../models/person');
 
 const router = express.Router();
 
@@ -25,4 +25,4 @@ router.get('/', (req,res) => {
 		});
 });
 
-export default router;
+module.exports = router;

@@ -9,7 +9,9 @@ class SWAP_DB():
 	def set_to_db(self, typeOfItem):
 		collection = []
 		# collecting data from api
+		print('Downloading ', typeOfItem)
 		collectionFromApi = swapi.get_all(typeOfItem)
+		print(collectionFromApi)
 		for x in collectionFromApi.iter():
 			collection.append(x.__dict__)
 		# setting to correct index of db.
