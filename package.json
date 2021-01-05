@@ -13,7 +13,7 @@
     "dev-all": "npm-run-all -p -r nodeServer dev"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
