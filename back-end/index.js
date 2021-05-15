@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 
 
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://mongodb:27017/starwars", { useMongoClient: true });
+mongoose.connect("mongodb://localhost:27017/starwars", { useMongoClient: true });
 
 
 app.use("/api/people", people);
