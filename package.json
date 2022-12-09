@@ -16,7 +16,7 @@
     "axios": "^0.18.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
-    "express": "^4.15.4",
+    "express": "^4.17.3",
     "mongoose": "^4.11.10",
     "semantic-ui-vue": "^0.8.1",
     "vue": "^2.5.11",
